@@ -2,5 +2,8 @@
 $config = array(
   'host' => 'localhost',
   'port' => '6544',
+  'recordings_dir' => '/var/lib/mythtv/recordings/',
+  'target_dir' => '/opt/mythsym/Recordings/',
+  'debug' => false,
   '' => '',
 );
