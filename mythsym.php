@@ -10,6 +10,7 @@ if (!is_dir($config['target_dir'])) {
 chdir($config['target_dir']);
 
 // First, delete everything!
+// @TODO: more incremental management of the links.
 exec("rm -rf ".$config['target_dir']."*");
 
 // Iterate through all the recordings the API gives us.
