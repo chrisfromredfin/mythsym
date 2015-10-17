@@ -17,17 +17,19 @@ exec("rm -rf ".$config['target_dir']."*");
 foreach($xml->Programs->Program as $program) {
   // Find the filename of the program.
   $target = $config['recordings_dir'].$program->FileName;
+
+  // Calculate the name of the symlink to be created.
+  $link = $program->Title.'/Season '.$program->Season.'/'.
+          $program->Title. ' - S'.$program->Season.'E'.$program->Episode.' - ' . $program->SubTitle.'.mpg';
+
   if (!is_file($target)) {
     // This is weird because it means the API gave us a program with no file.
-    trigger_error("$target does not exist", E_USER_WARNING);
+    trigger_error("$target does not exist ($program->Title S $program->Season E $program->Episode)", E_USER_WARNING);
     continue;
   }
 
   // Get the recording date.
   $recordingStarted = array_shift(explode('T', $program->Recording->StartTs));
-  // Calculate the name of the symlink to be created.
-  $link = $program->Title.'/Season '.$program->Season.'/'.
-          $program->Title. ' - S'.$program->Season.'E'.$program->Episode.' - ' . $program->SubTitle.'.mpg';
 
   // Make the Program folder if it doesn't exist.
   if (!is_dir($program->Title)) {
