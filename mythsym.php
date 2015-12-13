@@ -14,9 +14,17 @@ chdir($config['target_dir']);
 exec("rm -rf ".$config['target_dir']."*");
 
 // Iterate through all the recordings the API gives us.
+$unique_episode_counter = ($config['unknown_episode_start'] ? $config['unknown_episode_start'] : 1);
 foreach($xml->Programs->Program as $program) {
   // Find the filename of the program.
   $target = $config['recordings_dir'].$program->FileName;
+
+  // Correct for S0E0 conflicts so they each get a unique episode number. Otherwise even with separate titles,
+  // Plex will glom them together. 
+  if ($program->Season == 0) $program->Season = ($config['unknown_season'] ? $config['unknown_season'] : 100);
+  if ($program->Episode == 0) {
+    $program->Episode = $unique_episode_counter++;
+  }
 
   // Calculate the name of the symlink to be created.
   $link = $program->Title.'/Season '.$program->Season.'/'.

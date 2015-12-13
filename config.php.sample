@@ -5,5 +5,7 @@ $config = array(
   'recordings_dir' => '/var/lib/mythtv/recordings/',
   'target_dir' => '/opt/mythsym/Recordings/',
   'debug' => false,
+  'unknown_season' => 100,
+  'unknown_episode_start' => 1,
   '' => '',
 );
